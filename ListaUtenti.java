@@ -1,29 +1,45 @@
 import java.util.ArrayList;
 
-public class ListaUtenti{
-    private ArrayList<Utente> lista = new ArrayList<>();
+public class ListaUtenti {
+    private final ArrayList<Utente> lista = new ArrayList<>();
 
-    
-    public void add(String nome, String cognome, String CF){
+    public void add(String nome, String cognome, String CF) {
         lista.add(new Utente(nome, cognome, CF));
     }
 
-    public void remove(String key){
+    public Utente getUtenteByCf(String cf) {
+        for (Utente utente : lista) {
+            if (utente.getCf().equalsIgnoreCase(cf)) {
+                return utente;
+            }
+        }
+        return null;
+    }
+
+    public void remove(String key) {
         int i = 0;
-        for(Utente u: lista){
-            if(u.getCf().equals(key)){
+        for (Utente u : lista) {
+            if (u.getCf().equalsIgnoreCase(key)) {
                 lista.remove(i);
                 break;
             }
-            i ++;
+            i++;
         }
     }
 
-    public void showAll(){
-        for(Utente u: lista){
-            System.out.println("\n\n\nNome: " + u.getNome() + "\nCognome: " + u.getCognome() + "\nCF: " + u.getCf() + "\n");
+    public void showAll() {
+        if (lista.isEmpty()) {
+            System.out.println("Nessun utente registrato.");
+            return;
         }
-        System.out.println("\n\n\n");
-    }
 
+        for (Utente u : lista) {
+            System.out.println("\nNome: " + u.getNome());
+            System.out.println("Cognome: " + u.getCognome());
+            System.out.println("CF: " + u.getCf());
+            System.out.println("Affidabile: " + (u.isAffidabile() ? "Sì" : "No"));
+            System.out.println("Prestiti attivi: " + u.getPrestiti().size());
+        }
+        System.out.println();
+    }
 }

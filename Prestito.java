@@ -1,18 +1,40 @@
-public class Prestito{
-    Libro l;
-    String dataInizio;
-    String dataFine;
-    String dataConsegna;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
-    public Prestito(String IDLibro){
-        this.l = libro da cercare //ITERA I LIBRI TRAMITE ID E LO AGGIUNGE ALLA LISTA DELL UTENTE 
+public class Prestito {
+    private final Libro libro;
+    private final LocalDate dataInizio;
+    private final LocalDate dataFine;
+    private LocalDate dataConsegna;
+
+    public Prestito(Libro libro, LocalDate dataInizio, LocalDate dataFine) {
+        this.libro = libro;
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
     }
 
-    public void setDataConsegna(String dataConsegna) {
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public LocalDate getDataFine() {
+        return dataFine;
+    }
+
+    public LocalDate getDataConsegna() {
+        return dataConsegna;
+    }
+
+    public void setDataConsegna(LocalDate dataConsegna) {
         this.dataConsegna = dataConsegna;
     }
 
-    
+    public long calcolaGiorniDiRitardo(LocalDate dataEffettiva) {
+        if (dataConsegna == null) {
+            return Math.max(0, ChronoUnit.DAYS.between(dataFine, dataEffettiva));
+        }
+        return Math.max(0, ChronoUnit.DAYS.between(dataFine, dataConsegna));
+    }
 
-    
+
 }
